@@ -1,0 +1,146 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{%block titulo%}Crear Cliente{%endblock titulo%}
+{% block section %}Crear Cliente{% endblock section %}
+
+{% block content%}
+
+<div class="card mb-4 py-3 border-left-success">
+    <div class="col-12">
+      <!-- Form -->
+      <form method="POST">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-3">
+              <p style="margin-bottom: 0px;">DNI</p>
+              {{cliente_form.dni}}
+            </div>
+
+            <div class="col-3">
+              <p style="margin-bottom: 0px;">Nombre:</p>
+              {{cliente_form.nombre}}            <!-- Ver como hacer para cargar solo los equipos de ese cliente-->
+            </div>
+            
+            <div class="col-3">
+              <p style="margin-bottom: 0px;">Apellido</p>
+              {{cliente_form.apellido}}
+            </div>
+
+            <div class="col-3">
+              <p style="margin-bottom: 0px;">Fecha de Nacimiento:</p>
+              {{cliente_form.fechaNac}}
+            </div>
+
+        </div>
+        
+
+        <div class="row">
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Sexo:</p>
+            {{cliente_form.sexo}}
+          </div>
+          
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Domicilio: <button type="button"
+              class="btn btn-primary btn-sm btn-circle" class="fas fa-plus-circle fa-md"
+              onclick="location.href='/Servicios/crear_accesorio'"><i class="fas fa-plus"></i></button>
+            </p>
+            {{cliente_form.domicilio}}
+          </div>
+
+          <div class="col-3">
+            <p style="margin-bottom: 0px;">Telefono: <button type="button"
+              class="btn btn-primary btn-sm btn-circle" class="fas fa-plus-circle fa-md"
+              onclick="location.href='/Servicios/crear_accesorio'"><i class="fas fa-plus"></i></button>
+            </p>
+            {{cliente_form.telefono}}
+          </div>
+          
+          <div class="col-3" style="margin-left: 0px;">
+            <p style="margin-bottom: 0px;">Correo Electronico:</p>
+            {{cliente_form.correoElectronico}}
+          </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-3">
+          <p style="margin-bottom: 0px;">Empresa Cliente:  <button type="button"
+            class="btn btn-primary btn-sm btn-circle" class="fas fa-plus-circle fa-md"
+            onclick="location.href='/Servicios/crear_accesorio'"><i class="fas fa-plus"></i></button>
+          </p>
+          {{cliente_form.nombreEmpresa}}
+        </div>
+    </div>
+  
+    <hr>
+    <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+      <i class="fa fa-plus"></i> Crear
+    </button>
+  
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+          <i class="fa fa-reply"></i> Volver
+        </button>
+  
+      </form>
+      <!--end Form -->
+    </div>
+  </div>
+
+<!-- List -->
+{% if cliente%}
+<div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-secondary">Listado de Clientes</h6>
+        </div>
+        <div class="card-body">
+           <div class="table-responsive">
+            <table class="table table-bordered dataTable" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Sexo</th>
+                    <th>Domicilio</th>
+                    <th>Telefono</th>
+                    <th>Correo Electronico</th>
+                    <th>Empresa del cliente</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for clien in cliente%}
+                  <tr>
+                    <td style="text-align: left;">{{clien.dni}}</td>
+                    <td style="text-align: left;">{{clien.nombre}}</td>
+                    <td style="text-align: left;">{{clien.apellido}}</td>
+                    <td style="text-align: left;">{{clien.fechaNac}}</td>
+                    <td style="text-align: left;">{{clien.sexo}}</td>
+                    <td style="text-align: left;">{{clien.domicilio}}</td>
+                    <td style="text-align: left;">{{clien.telefono}}</td>
+                    <td style="text-align: left;">{{clien.correoElectronico}}</td>
+                    <td style="text-align: left;">{{clien.nombreEmpresa}}</td>
+                    <td width="10%" align="center">
+                          <div class="table-data-feature">
+                            <button type="button" class="btn btn-info" onclick="location.href='/Personas/listar_cliente/'">Ver mas</button>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+  </div>
+
+</div>
+{% else %}
+    <p>Aun no hay datos ingresados</p>
+{% endif %}
+<!-- end List -->
+
+{% endblock content%}
+

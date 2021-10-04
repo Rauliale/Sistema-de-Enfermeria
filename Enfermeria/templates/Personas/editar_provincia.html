@@ -1,0 +1,112 @@
+{% extends 'index.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Gestionar Provincia{% endblock titulo%}
+
+{% block section %}Editar Provincia{% endblock section %}
+
+{% block content%}
+
+<div class="card col-6 mb-4 py-3 border-left-warning">
+  <div class="col-12">
+    <!-- Form -->
+    <form method="POST">
+      {%csrf_token%}
+      {{provincia_form.provincia}}
+
+      <hr>
+      <button type="submit" class="btn btn-success" style="float: right; margin: 1%;">
+        <i class="fa fa-check"></i> Editar
+      </button>
+
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="float: right;margin: 1%;">
+        <i class="fa fa-reply"></i> Volver
+      </button>
+
+       
+      
+      <!-- Modal Eliminar -->
+       <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg2{{provincia.pk}}">
+        <i class="fas fa-trash"></i>
+      </button>
+      <div class="modal fade bs-example-modal-lg2{{provincia.pk}}" id="myModal2{{provincia.pk}}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel{{provincia.pk}}">Confirmar Eliminacion</h4>
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                  </div>
+                  <div class="modal-body">
+                      <a>¿Está seguro de <strong>eliminar</strong> la provincia?</a>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="alineado-derecha">
+                      <a href="{% url 'Personas:eliminar_provincia' prov.pk %}"> <!-- añadir aca la url -->
+                        <button type="button" class="btn btn-danger" >Eliminar</button>
+                      </a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- End Modal -->
+
+    </form>
+    <!--end Form -->
+  </div>
+</div>
+
+<!-- Messages -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+{% if messages %}
+    {% for message in messages %}
+      {% if message.tags == 'success'%}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Se editó correctamente",
+          type: "success",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+      {% if message.tags == 'warning' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Ocurrió algo inesperado",
+          type: "warning",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+      {% if message.tags == 'error' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          swal({
+          title: "Ocurrió un error",
+          type: "error",
+          confirmButtonColor: "#4e73df",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false
+        })});
+      </script>
+      {% endif %}
+    {% endfor %}
+{% endif %}
+
+<!-- end Messages -->
+
+
+{% endblock content%}

@@ -1,0 +1,31 @@
+{% extends 'list.html' %}
+
+{% block columns %}
+    <tr>
+        <th scope="col">Nro Atencion</th>
+        <th scope="col">Historia Clinica</th>
+        <th scope="col">Fecha de Ingreso</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {% for c in object_list %}
+        <tr>
+            <td>{{ c.codAtencion }}</td>
+            <td>{{ c.historiaClinica }}</td>
+            <td>{{ c.fechaIngreso }}</td>
+            <td>{{ c.motivoAtencion }}</td>
+            <td>
+                <button type="button" class="btn btn-warning btn-xs btn-flat">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+

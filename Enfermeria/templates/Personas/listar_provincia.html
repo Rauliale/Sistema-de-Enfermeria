@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+<!DOCTYPE html>
+
+{% block titulo%}Listar Provincias{% endblock titulo%}
+
+{% block section %}Listar Provincias{% endblock section %}
+
+{% block content%}
+
+<!-- List -->
+{% if provincia%}
+<div class="card shadow">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-secondary">Listado de Provincias</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable" id="dataTable">
+        <thead>
+          <tr>
+            <th>Provincia</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for prov in provincia%}
+          <!-- aca si uso tipoEquipo me muestra el listado sin nada.... si pongo tipo_Equipo explota-->
+          <tr>
+            <td style="text-align: left;">{{prov}}</td>
+            <td width="10%" align="center">
+              <div class="table-data-feature">
+                <button type="button" class="btn btn-info" onclick="location.href='/Personas/editar_provincia/{{prov.pk}}'">Ver mas</button>
+              </div>
+            </td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% else %}
+    <p>Aún no hay datos cargados</p>
+{% endif %}
+<!-- end List -->
+
+
+
+{% endblock content%}
