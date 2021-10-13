@@ -10,7 +10,7 @@ from Reportes.forms import ReporteForm
 from django.db.models.functions import Coalesce
 from django.db.models import Sum
 import datetime
-
+from django.contrib.auth.decorators import login_required
 #from django.db.models.functions import Coalesce
 #from django.db.models import Sum
 
@@ -19,6 +19,7 @@ class ReporteAtencionView(TemplateView):
     template_name = 'Reportes/reporte.html'
 
     @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -38,7 +39,8 @@ class ReporteAtencionView(TemplateView):
                         s.codAtencion,
                         s.historiaClinica.paciente.nombre,
                         s.historiaClinica.paciente.apellido,
-                        s.date_joined.strftime('%Y-%m-%d')
+                        s.date_joined.strftime('%Y-%m-%d'),
+                        s.motivoAtencion,
                     ])
             else:
                 data['error'] = 'Ha ocurrido un error'

@@ -5,6 +5,7 @@ from datetime import datetime
 from Personas.models import Paciente, Enfermero, Medico
 from django.forms.models import model_to_dict
 
+from user.models import BaseModel
 
 
 
@@ -22,9 +23,21 @@ class Enfermedad(models.Model):
     def __str__(self):
         return str(self.codEnfermedad) + ' - ' + str(self.nombre)
 
+
+
+class UnidadMedida(models.Model):
+    codUnidadMedida = models.AutoField('Codigo de Medida', primary_key = True, null = False, blank = False)
+    nombre = models.CharField('Nombre Unidad Medida', max_length = 100, null = False, blank = False)
+
+
+
 class Medicacion(models.Model):
     codMedicacion = models.AutoField('Codigo de Medicacion', primary_key = True, null = False, blank = False)
     nombre = models.CharField('Nombre Medicacion', max_length = 100, null = False, blank = False)
+    dosis = models.CharField('Dosis Medicacion', max_length = 100, null = False, blank = False)
+    repetirDosis = models.CharField('Repetir dosis Medicacion', max_length = 100, null = False, blank = False)
+    cadaCuanto = models.CharField('Horas Nueva dosis', max_length = 100, null = False, blank = False)
+    unidadMedida = models.ForeignKey(UnidadMedida, on_delete = models.PROTECT)
 
     class Meta:
         verbose_name = 'Medicacion'

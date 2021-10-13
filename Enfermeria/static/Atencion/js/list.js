@@ -13,10 +13,9 @@ $(function () {
             dataSrc: ""
         },
         columns: [
-            {"data": "id"},
-            {"data": "name"},
-            {"data": "desc"},
-            {"data": "desc"},
+            {"data": "codAtencion"},
+            {"data": "fechaIngreso"},
+            {"data": "codHistoriaClinica"},
         ],
         columnDefs: [
             {
@@ -24,8 +23,8 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/category/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="/erp/category/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    var buttons = '<a href="/paciente/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
+                    buttons += '<a href="/paciente/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }
             },

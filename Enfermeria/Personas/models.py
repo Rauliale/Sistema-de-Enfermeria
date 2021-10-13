@@ -1,8 +1,13 @@
+from crum import get_current_user
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 from datetime import datetime, date, time, timedelta
 import calendar
+from django.forms.models import model_to_dict
+
+
+from user.models import BaseModel
 
 
 
@@ -21,6 +26,17 @@ class Guardia(models.Model):
 
     def __str__(self):
         return str(self.fecha) + ' - ' + str(self.horaInicio) 
+
+class Asistencia(models.Model):
+    codAsistencia=models.AutoField(primary_key=True)
+    codGuardia=models.ForeignKey(Guardia, on_delete=models.PROTECT,null=True)
+    fechaAsistencia = models.DateField('Fecha de Asistencia', null = False, blank = False)
+    horaInicio = models.DateTimeField()
+    horaFin = models.DateTimeField()
+
+    
+    def __str__(self):
+        return self.fechaAsistencia
     
 
 class Provincia(models.Model):
@@ -105,7 +121,7 @@ class Rol(models.Model):
         return super(Rol, self).save(*args, **kwargs)
 
 
-class Paciente(models.Model):
+class Paciente(BaseModel):
     dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
     rol = models.ForeignKey(Rol, on_delete = models.DO_NOTHING,  null = True, blank = True)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
@@ -126,11 +142,18 @@ class Paciente(models.Model):
             return str(self.nombre) + ' ' + str(self.apellido )
             #return self.apellido
 
-    def save(self, *args, **kwargs):
-        self.nombre = (self.nombre).upper()
-        self.apellido = (self.apellido).upper()
-        self.domicilio = (self.domicilio)        
-        return super(Paciente, self).save(*args, **kwargs)
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    def save(self, force_incert=False, force_update=False, using=None, update_fields=None):
+        user = get_current_user()
+        if user is not None:    
+            if not self.pk:
+                self.user.cretion = user
+            else:
+                self.user_update = user
+        super(Paciente, self).save()
 
 
 

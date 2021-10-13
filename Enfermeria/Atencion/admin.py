@@ -8,3 +8,4 @@ admin.site.register(Alergia)
 
 admin.site.register(HistoriaClinica)
 admin.site.register(Atencion)
+admin.site.register(UnidadMedida)
